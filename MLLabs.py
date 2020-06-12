@@ -5,6 +5,8 @@ from numpy import log2 as log
 import pprint
 from Perceptron import Perceptron
 from ID3 import ID3
+from Gaussians import Gaussian2D
+from Gaussians import Gaussian1D
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-float(x)))
@@ -83,3 +85,24 @@ def sigmoid(x):
 #
 # tree = id3.buildTree(df)
 # id3.printTree(tree)
+
+# ------------------------------------------------------------------------
+# Lab 2- Decision Trees - ID3
+# ------------------------------------------------------------------------
+gaussian1D = Gaussian1D()
+gaussian2D = Gaussian2D()
+
+# 2.
+
+# data = np.array([180, 160, 200, 171, 159, 150])
+# gaussian1D.Normal1D(data)
+
+# 3.
+
+# data = np.array([[-2, -1, 0, -2], [2, 3, 1, 1]])
+# gaussian2D.Normal2D(data)
+
+# 4.
+
+# data = np.array([[2, 1, 0, 2], [-2, 3, -1, 1]])
+# gaussian2D.Normal2D(data)
