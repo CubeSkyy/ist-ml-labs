@@ -1,15 +1,12 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from numpy import log2 as log
-import pprint
-from Perceptron import Perceptron
-from ID3 import ID3
-from Gaussians import Gaussian2D
 from Gaussians import Gaussian1D
+from Gaussians import Gaussian2D
+from NaiveBayes import NaiveBayes
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-float(x)))
+
 
 # ------------------------------------------------------------------------
 # Lab 1 - Perceptron
@@ -87,7 +84,7 @@ def sigmoid(x):
 # id3.printTree(tree)
 
 # ------------------------------------------------------------------------
-# Lab 2- Decision Trees - ID3
+# Lab 2- Gaussians
 # ------------------------------------------------------------------------
 gaussian1D = Gaussian1D()
 gaussian2D = Gaussian2D()
@@ -106,3 +103,30 @@ gaussian2D = Gaussian2D()
 
 # data = np.array([[2, 1, 0, 2], [-2, 3, -1, 1]])
 # gaussian2D.Normal2D(data)
+
+
+# ------------------------------------------------------------------------
+# Lab 2- Naive Bayes
+# ------------------------------------------------------------------------
+
+# 2. a) b)
+NB = NaiveBayes()
+#
+# x1 = '1,1,1,1,0,1'.split(',')
+# x2 = '1,0,0,1,0,0'.split(',')
+# x3 = '0,0,0,1,1,0'.split(',')
+# x4 = '1,1,1,0,1,0'.split(',')
+# x5 = '0,1,1,1,1,0'.split(',')
+# output = 'a,a,a,b,b,c'.split(',')
+#
+# dataset = {'x1': x1, 'x2': x2, 'x3': x3, 'x4': x4, 'x5': x5, 'output': output}
+# df = pd.DataFrame(dataset, columns=['x1', 'x2', 'x3', 'x4', 'x5', 'output'])
+#
+# query = pd.Series({'x1': 1, 'x2': 0, 'x3': 1, 'x4': 0, 'x5': 1, })
+# res =NB.query(df, query)
+
+
+# 2. c)
+
+# query = pd.Series({'x1': 1,  'x3': 1, 'x5': 1, })
+# res = NB.query(df, query)
