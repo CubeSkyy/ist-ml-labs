@@ -1,12 +1,8 @@
 import numpy as np
 from Gaussians import Gaussian1D
 from Gaussians import Gaussian2D
+from KMeans import _KMeans
 from NaiveBayes import NaiveBayes
-
-
-def sigmoid(x):
-    return 1 / (1 + np.exp(-float(x)))
-
 
 # ------------------------------------------------------------------------
 # Lab 1 - Perceptron
@@ -111,6 +107,7 @@ gaussian2D = Gaussian2D()
 
 # 2. a) b)
 NB = NaiveBayes()
+
 #
 # x1 = '1,1,1,1,0,1'.split(',')
 # x2 = '1,0,0,1,0,0'.split(',')
@@ -133,6 +130,28 @@ NB = NaiveBayes()
 
 
 # ------------------------------------------------------------------------
+# Lab 5 - KMeans
+# ------------------------------------------------------------------------
+
+# 1
+# x = np.asarray([[0, 0], [1, 0], [0, 2], [2, 2]])
+# c = np.asarray([[2, 0], [2, 1]])
+# kmeans = _KMeans()
+# kmeans.runKMeans(x, c)
+
+# 2.a
+# x = np.asarray([[1, 0, 0], [8, 8, 4], [3, 3, 0], [0, 0, 1], [0, 1, 0], [3, 2, 1]])
+# c = np.asarray([x[0], x[1]])
+# kmeans = _KMeans()
+# kmeans.runKMeans(x, c)
+
+# 2.b
+# x = np.asarray([[1, 0, 0], [8, 8, 4], [3, 3, 0], [0, 0, 1], [0, 1, 0], [3, 2, 1]])
+# c = np.asarray([x[0], x[1], x[2]])
+# kmeans = _KMeans()
+# kmeans.runKMeans(x, c, k=3)
+
+# ------------------------------------------------------------------------
 # Lab 8 - PCA
 # ------------------------------------------------------------------------
 #
@@ -150,3 +169,89 @@ NB = NaiveBayes()
 # # Transform dataset with KT Transform
 # for e in data.T:
 #     print("KT * X = %s * %s = %s" % (v.T, e, np.dot(v.T,e)))
+
+
+
+
+# ------------------------------------------------------------------------
+# Other Stuff
+# ------------------------------------------------------------------------
+
+def mpInverse(x, verbose=True):
+    res = np.dot(np.linalg.inv(np.dot(x.T, x)), x.T)
+    if verbose:
+        print("\n(X.T * X)^-1  * X.T = ")
+        print("\n(%s * %s)^-1 * %s = " % (x.T, x, x.T))
+        print("\n(%s)^-1 * %s = " % (np.dot(x.T, x), x.T))
+        print("\n%s * %s = " % (np.linalg.inv(np.dot(x.T, x)), x.T))
+        print("\n%s" % (res))
+
+    return res
+
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-float(x)))
+
+
+def sigmoidDerivative(x):
+    return sigmoid(x) * (1 - sigmoid(x))
+
+
+def weightDelta(x, y, w, rate=1, output=sigmoid):
+    return rate * x * (y - output(np.dot(w, x)))
+
+
+# ------------------------------------------------------------------------
+# RBF Network
+# ------------------------------------------------------------------------
+
+# initc = np.array([[0, 0], [-1, -0]])
+# max_epochs_kmeans = 2
+# rate = 1
+# b = 1
+# w = np.array([1, 1])
+# x = np.array([[0, 0], [0, -1], [-1, 0], [-1, -1]], dtype=float)
+# sigma = 1
+# target = np.array([1, 0, 0, 1])
+# max_epochs = 3
+#
+# rbfNetwork = RBFNetwork(initc, rate, b, w, x, sigma, target, max_epochs, max_epochs_kmeans)
+# rbfNetwork.train()
+# rbfNetwork.query(np.array([0, 0]))
+# rbfNetwork.query(np.array([-1, 0]))
+# rbfNetwork.query(np.array([0, -1]))
+# rbfNetwork.query(np.array([-1, -1]))
+
+# ------------------------------------------------------------------------
+# Linear regression SSE closed form
+# ------------------------------------------------------------------------
+
+# x = np.asarray([[1, 1], [2, 1], [1, 3], [3, 3]])
+# x = np.append(np.ones((x.shape[0], 1)), x, axis=1)
+# y = np.asarray([[1.4, 0.5, 2.0, 2.5]])
+#
+# print(np.dot(mpInverse(x, verbose=False), y.T))
+
+# ------------------------------------------------------------------------
+# Logistic Regression gradient descent
+# ------------------------------------------------------------------------
+
+# x = np.asarray([[1, 1], [2, 1], [1, 3], [3, 3]])
+# x = np.append(np.ones((x.shape[0], 1)), x, axis=1)
+# y = np.asarray([1, 1, 0, 0])
+# w = np.asarray([1, 1, 1]).astype('float')
+# rate = 1
+
+# ------------------------
+# Normal GD
+# ------------------------
+# sum = w.copy()
+# for i, e in enumerate(x):
+#     sum += weightDelta(x[i], y.T[i], w, rate=1, output=sigmoid)
+#
+# print(sum)
+
+# ------------------------
+# Stochastic GD
+# ------------------------
+# print(w + weightDelta(x[0], y.T[0], w, rate=1, output=sigmoid))
