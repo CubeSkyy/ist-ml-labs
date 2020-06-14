@@ -1,8 +1,8 @@
 import numpy as np
-import pandas as pd
 from Gaussians import Gaussian1D
 from Gaussians import Gaussian2D
 from NaiveBayes import NaiveBayes
+
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-float(x)))
@@ -130,3 +130,23 @@ NB = NaiveBayes()
 
 # query = pd.Series({'x1': 1,  'x3': 1, 'x5': 1, })
 # res = NB.query(df, query)
+
+
+# ------------------------------------------------------------------------
+# Lab 8 - PCA
+# ------------------------------------------------------------------------
+#
+# g2D = Gaussian2D()
+#
+# data = np.array([[0, 0], [4, 0], [2, 1], [6, 3]]).T
+# g2D.mean(data)
+# cov = g2D.covariance(data)
+# w, v = np.linalg.eig(cov)
+#
+# print("Eigenvalues: %s \n" % w)
+# print("Eigenvectors: %s \n" % v.T)
+# print("KT-Transform: %s \n" % v)
+#
+# # Transform dataset with KT Transform
+# for e in data.T:
+#     print("KT * X = %s * %s = %s" % (v.T, e, np.dot(v.T,e)))

@@ -1,5 +1,7 @@
-import numpy as np
 import itertools
+
+import numpy as np
+
 
 class Gaussian1D:
     def mean(self, x):
@@ -12,11 +14,11 @@ class Gaussian1D:
             print("Std: (1/(%d - 1)) * sqrt(" % (x.shape[0]), end="")
         sum = 0
         for i in range(0, x.shape[0]):
-            sum += (x[i] - mean)**2
+            sum += (x[i] - mean) ** 2
             if verbose:
                 print("(%.2f %s %.2f)^2"
                       % (x[i], '-' if mean >= 0 else '+', abs(mean))
-                      , end=" + " if i != x.shape[0] - 1 else ") = " + str(np.sqrt(sum/ (x.shape[-1] - 1))) + "\n")
+                      , end=" + " if i != x.shape[0] - 1 else ") = " + str(np.sqrt(sum / (x.shape[-1] - 1))) + "\n")
 
         return std
 
@@ -26,13 +28,17 @@ class Gaussian1D:
         print("N(x | u, std) = 1/(%f * sqrt(2pi) * exp(-1/2 * (x - %f / %f)^2)"
               % (std, mean, std))
 
+
 class Gaussian2D:
-    def mean(self, x):
-        return np.mean(x, axis=1)
+    def mean(self, x, verbose=True):
+        mean = np.mean(x, axis=1)
+        if verbose:
+            print("Mean:", mean,"\n")
+        return mean
 
     def covariance(self, x, verbose=True):
         cov = np.cov(x)
-        mean = self.mean(x)
+        mean = self.mean(x, verbose=False)
         lst = list(itertools.product([0, 1], repeat=cov.shape[0]))
         for e in lst:
             if verbose:
@@ -46,7 +52,7 @@ class Gaussian2D:
                              x[e[1]][i], '-' if mean[e[1]] >= 0 else '+', abs(mean[e[1]]))
                           , end=" + " if i != x.shape[-1] - 1 else " = " + str(sum / (x.shape[-1] - 1)) + "\n")
         if verbose:
-            print("\nCov. Matrix:\n", cov)
+            print("\nCov. Matrix:\n %s \n" % cov)
         return cov
 
     def determinant(self, x, verbose=True):
@@ -61,7 +67,7 @@ class Gaussian2D:
             print("Inverse:\n", inv)
         return inv
 
-    def Normal2D(self, x, verbose = False):
+    def Normal2D(self, x, verbose=False):
         mean = np.array2string(self.mean(x))
         cov = self.covariance(x, verbose=verbose)
         covStr = np.array2string(cov)
